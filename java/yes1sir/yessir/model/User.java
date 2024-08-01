@@ -1,4 +1,4 @@
-package yes1sir.yessir;
+package yes1sir.yessir.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

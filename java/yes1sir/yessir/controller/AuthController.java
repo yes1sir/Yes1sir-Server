@@ -1,7 +1,12 @@
-package yes1sir.yessir;
+package yes1sir.yessir.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import yes1sir.yessir.dto.GoogleAccountProfileResponse;
+import yes1sir.yessir.model.User;
+import yes1sir.yessir.service.GoogleClient;
+import yes1sir.yessir.service.UserService;
+import yes1sir.yessir.util.JwtTokenGenerator;
 
 import java.util.Map;
 

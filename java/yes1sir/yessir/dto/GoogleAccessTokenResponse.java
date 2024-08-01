@@ -1,4 +1,4 @@
-package yes1sir.yessir;
+package yes1sir.yessir.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

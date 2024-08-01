@@ -1,4 +1,4 @@
-package yes1sir.yessir;
+package yes1sir.yessir.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,6 +8,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import yes1sir.yessir.dto.GoogleAccessTokenRequest;
+import yes1sir.yessir.dto.GoogleAccessTokenResponse;
+import yes1sir.yessir.dto.GoogleAccountProfileResponse;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;

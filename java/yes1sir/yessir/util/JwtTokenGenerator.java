@@ -1,4 +1,4 @@
-package yes1sir.yessir;
+package yes1sir.yessir.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
