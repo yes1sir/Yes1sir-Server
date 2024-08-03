@@ -2,37 +2,36 @@ package yes1sir.yessir.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import yes1sir.yessir.dto.GoogleAccountProfileResponse;
-import yes1sir.yessir.model.GoogleLogin;
 import yes1sir.yessir.model.User;
-import yes1sir.yessir.repository.GoogleLoginRepository;
 import yes1sir.yessir.repository.UserRepository;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
+
+import java.util.Optional;
 
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    private GoogleLoginRepository googleLoginRepository;
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
-    public User findOrCreateUser(GoogleAccountProfileResponse profile) {
-        GoogleLogin googleLogin = googleLoginRepository.findByGoogleId(profile.getId());
+    public User createOrUpdateUser(Payload payload) {
+        String googleId = payload.getSubject();
+        String email = payload.getEmail();
 
-        if (googleLogin != null) {
-            return googleLogin.getUser();
+        Optional<User> optionalUser = userRepository.findByGoogleId(Long.parseLong(googleId));
+        User user;
+        if (optionalUser.isPresent()) {
+            user = optionalUser.get();
+        } else {
+            user = new User();
+            user.setGoogleId(Long.parseLong(googleId));
+            user.setEmail(email);
+            user = userRepository.save(user);
         }
-
-        User user = new User();
-        user.setEmail(profile.getEmail());
-        userRepository.save(user);
-
-        GoogleLogin newGoogleLogin = new GoogleLogin();
-        newGoogleLogin.setGoogleId(profile.getId());
-        newGoogleLogin.setUser(user);
-        googleLoginRepository.save(newGoogleLogin);
-
         return user;
     }
 }

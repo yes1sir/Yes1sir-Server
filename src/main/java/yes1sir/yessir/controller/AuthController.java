@@ -9,48 +9,33 @@ import yes1sir.yessir.model.User;
 import yes1sir.yessir.repository.GoogleLoginRepository;
 import yes1sir.yessir.repository.UserRepository;
 import yes1sir.yessir.service.GoogleClient;
+import yes1sir.yessir.service.UserService;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/sns_logins")
+@RequestMapping("/api/google_login")
 public class AuthController {
 
     private final GoogleClient googleClient;
     private final GoogleLoginRepository googleLoginRepository;
     private final UserRepository userRepository;
+    private final UserService userService;
 
     @Autowired
-    public AuthController(GoogleClient googleClient, GoogleLoginRepository googleLoginRepository, UserRepository userRepository) {
+    public AuthController(GoogleClient googleClient, GoogleLoginRepository googleLoginRepository, UserRepository userRepository, UserService userService) {
         this.googleClient = googleClient;
         this.googleLoginRepository = googleLoginRepository;
         this.userRepository = userRepository;
+        this.userService = userService;
     }
 
-    @GetMapping
-    public ResponseEntity<?> googleLogin(@RequestParam String token) {
+    @PostMapping
+    public ResponseEntity<?> googleLogin(@RequestBody GoogleLoginRequest request) {
         try {
-            GoogleIdToken.Payload payload = googleClient.verifyToken(token);
-            String googleId = payload.getSubject();
-            String email = payload.getEmail();
-
-            Optional<User> optionalUser = userRepository.findByGoogleID(Long.parseLong(googleId));
-            User user;
-            if (optionalUser.isPresent()) {
-                user = optionalUser.get();
-            } else {
-                user = new User();
-                user.setGoogleID(Long.parseLong(googleId));
-                user.setEmail(email);
-                user = userRepository.save(user);
-
-                GoogleLogin googleLogin = new GoogleLogin();
-                googleLogin.setGoogleID(Long.parseLong(googleId));
-                googleLogin.setUserID(user.getUserID());
-                googleLoginRepository.save(googleLogin);
-            }
-
+            GoogleIdToken.Payload payload = googleClient.verifyToken(request.getToken());
+            User user = userService.createOrUpdateUser(payload);
             String jwtToken = createJwtToken(user.getUserID());
             return ResponseEntity.ok(new LoginResponse(user.getUserID(), jwtToken, LocalDateTime.now().plusHours(1)));
         } catch (Exception e) {
@@ -62,6 +47,18 @@ public class AuthController {
         return "generated-jwt-token";
     }
 
+    static class GoogleLoginRequest {
+        private String token;
+
+        public String getToken() {
+            return token;
+        }
+
+        public void setToken(String token) {
+            this.token = token;
+        }
+    }
+
     static class LoginResponse {
         private Long userId;
         private String token;
@@ -71,18 +68,6 @@ public class AuthController {
             this.userId = userId;
             this.token = token;
             this.expiresAt = expiresAt;
-        }
-
-        public Long getUserId() {
-            return userId;
-        }
-
-        public String getToken() {
-            return token;
-        }
-
-        public LocalDateTime getExpiresAt() {
-            return expiresAt;
         }
     }
 

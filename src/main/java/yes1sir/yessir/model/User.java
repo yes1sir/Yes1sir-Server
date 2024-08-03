@@ -3,28 +3,30 @@ package yes1sir.yessir.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "user")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userID;
+    private Long id;
 
-    @Column(nullable = true, length = 255)
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(nullable = true)
-    private Long googleID;
+    @Column(name = "googleid", nullable = false)
+    private Long googleId; // googleID -> googleId로 수정
 
-    @Column(nullable = true)
-    private Long skinTypeID;
+    @ManyToOne
+    @JoinColumn(name = "skin_type_skin_typeid")
+    private SkinType skinType;
 
-    // Getters and setters
-    public Long getUserID() {
-        return userID;
+    // Getters and Setters
+    public Long getId() {
+        return id;
     }
 
-    public void setUserID(Long userID) {
-        this.userID = userID;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getEmail() {
@@ -35,19 +37,23 @@ public class User {
         this.email = email;
     }
 
-    public Long getGoogleID() {
-        return googleID;
+    public Long getGoogleId() {
+        return googleId;
     }
 
-    public void setGoogleID(Long googleID) {
-        this.googleID = googleID;
+    public void setGoogleId(Long googleId) {
+        this.googleId = googleId;
     }
 
-    public Long getSkinTypeID() {
-        return skinTypeID;
+    public SkinType getSkinType() {
+        return skinType;
     }
 
-    public void setSkinTypeID(Long skinTypeID) {
-        this.skinTypeID = skinTypeID;
+    public void setSkinType(SkinType skinType) {
+        this.skinType = skinType;
+    }
+
+    public Long getUserID() {
+        return id;
     }
 }

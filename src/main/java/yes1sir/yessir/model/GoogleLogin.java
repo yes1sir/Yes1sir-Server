@@ -3,31 +3,41 @@ package yes1sir.yessir.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "google_login")
 public class GoogleLogin {
 
     @Id
-    private Long googleID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column(nullable = false)
-    private Long userID;
+    @Column(name = "googleid", nullable = false)
+    private Long googleId;
 
-    // Getters and setters
-    public Long getGoogleID() {
-        return googleID;
+    @Column(name = "userid", nullable = false)
+    private Long userId;
+
+    // Getters and Setters
+    public Long getId() {
+        return id;
     }
 
-    public void setGoogleID(Long googleID) {
-        this.googleID = googleID;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public Long getUserID() {
-        return userID;
+    public Long getGoogleId() {
+        return googleId;
     }
 
-    public void setUserID(Long userID) {
-        this.userID = userID;
+    public void setGoogleId(Long googleId) {
+        this.googleId = googleId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }
-
-
-
