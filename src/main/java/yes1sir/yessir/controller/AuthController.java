@@ -9,7 +9,6 @@ import yes1sir.yessir.model.User;
 import yes1sir.yessir.repository.GoogleLoginRepository;
 import yes1sir.yessir.repository.UserRepository;
 import yes1sir.yessir.service.GoogleClient;
-import yes1sir.yessir.service.UserService;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -21,25 +20,42 @@ public class AuthController {
     private final GoogleClient googleClient;
     private final GoogleLoginRepository googleLoginRepository;
     private final UserRepository userRepository;
-    private final UserService userService;
 
     @Autowired
-    public AuthController(GoogleClient googleClient, GoogleLoginRepository googleLoginRepository, UserRepository userRepository, UserService userService) {
+    public AuthController(GoogleClient googleClient, GoogleLoginRepository googleLoginRepository, UserRepository userRepository) {
         this.googleClient = googleClient;
         this.googleLoginRepository = googleLoginRepository;
         this.userRepository = userRepository;
-        this.userService = userService;
     }
 
     @PostMapping
     public ResponseEntity<?> googleLogin(@RequestBody GoogleLoginRequest request) {
         try {
             GoogleIdToken.Payload payload = googleClient.verifyToken(request.getToken());
-            User user = userService.createOrUpdateUser(payload);
-            String jwtToken = createJwtToken(user.getUserID());
-            return ResponseEntity.ok(new LoginResponse(user.getUserID(), jwtToken, LocalDateTime.now().plusHours(1)));
+            String googleId = payload.getSubject();
+            String email = payload.getEmail();
+
+            Optional<User> optionalUser = userRepository.findByGoogleId(Long.parseLong(googleId));
+            User user;
+            if (optionalUser.isPresent()) {
+                user = optionalUser.get();
+            } else {
+                user = new User();
+                user.setGoogleId(Long.parseLong(googleId));
+                user.setEmail(email);
+                user = userRepository.save(user);
+
+                GoogleLogin googleLogin = new GoogleLogin();
+                googleLogin.setGoogleId(Long.parseLong(googleId));
+                googleLogin.setUserId(user.getId());
+                googleLoginRepository.save(googleLogin);
+            }
+
+            String jwtToken = createJwtToken(user.getId());
+            return ResponseEntity.ok(new LoginResponse(user.getId(), jwtToken, LocalDateTime.now().plusHours(1)));
         } catch (Exception e) {
-            return ResponseEntity.status(400).body(new ErrorResponse("인증에 실패하였습니다."));
+            e.printStackTrace(); // 로그에 예외를 출력하여 문제를 파악
+            return ResponseEntity.status(400).body(new ErrorResponse("인증에 실패하였습니다: " + e.getMessage()));
         }
     }
 
