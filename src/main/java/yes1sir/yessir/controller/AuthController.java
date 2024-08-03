@@ -31,6 +31,6 @@ public class AuthController {
         String accessToken = googleClient.getGoogleAccessToken(code);
         GoogleAccountProfileResponse profile = googleClient.getGoogleAccountProfile(accessToken);
         User user = userService.findOrCreateUser(profile);
-        return jwtTokenGenerator.generateToken(user.getId());
+        return jwtTokenGenerator.generateToken(user.getId().toString());
     }
 }
