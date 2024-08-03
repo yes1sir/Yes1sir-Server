@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/google_login")
+@RequestMapping("/api/sns_logins")
 public class AuthController {
 
     private final GoogleClient googleClient;
@@ -28,10 +28,10 @@ public class AuthController {
         this.userRepository = userRepository;
     }
 
-    @PostMapping
-    public ResponseEntity<?> googleLogin(@RequestBody GoogleLoginRequest request) {
+    @GetMapping
+    public ResponseEntity<?> googleLogin(@RequestParam String token) {
         try {
-            GoogleIdToken.Payload payload = googleClient.verifyToken(request.getToken());
+            GoogleIdToken.Payload payload = googleClient.verifyToken(token);
             String googleId = payload.getSubject();
             String email = payload.getEmail();
 
@@ -62,18 +62,6 @@ public class AuthController {
         return "generated-jwt-token";
     }
 
-    static class GoogleLoginRequest {
-        private String token;
-
-        public String getToken() {
-            return token;
-        }
-
-        public void setToken(String token) {
-            this.token = token;
-        }
-    }
-
     static class LoginResponse {
         private Long userId;
         private String token;
@@ -83,6 +71,18 @@ public class AuthController {
             this.userId = userId;
             this.token = token;
             this.expiresAt = expiresAt;
+        }
+
+        public Long getUserId() {
+            return userId;
+        }
+
+        public String getToken() {
+            return token;
+        }
+
+        public LocalDateTime getExpiresAt() {
+            return expiresAt;
         }
     }
 
