@@ -1,7 +1,6 @@
 package yes1sir.yessir.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +8,7 @@ import yes1sir.yessir.model.SkinType;
 import yes1sir.yessir.service.SkinTypeService;
 
 @RestController
-@RequestMapping("${app.base.url}/api/skin_types")
+@RequestMapping("/api/skin_types")
 public class SkinTypeController {
 
     private final SkinTypeService skinTypeService;
