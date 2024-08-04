@@ -20,10 +20,51 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+	runtimeOnly 'mysql:mysql-connector-java:8.0.32'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	implementation 'org.slf4j:slf4j-api:2.0.0'
+	runtimeOnly 'org.slf4j:slf4j-simple:2.0.0'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// Google API Client Library for Java
+	implementation 'com.google.api-client:google-api-client:1.32.1'
+	implementation 'com.google.oauth-client:google-oauth-client-jetty:1.32.1'
+	implementation 'com.google.http-client:google-http-client-jackson2:1.40.1'
+	implementation 'com.google.http-client:google-http-client-gson:1.40.1'
+
+	// Jackson - Ensure correct version
+	implementation 'com.fasterxml.jackson.core:jackson-core:2.14.0'
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.0'
+	implementation 'com.fasterxml.jackson.core:jackson-annotations:2.14.0'
+
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
+	// Spring Security OAuth2 Client
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+	// Spring Cloud Context
+	implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap:3.1.7'
+	implementation 'org.springframework.cloud:spring-cloud-context:3.1.7'
+	implementation 'org.springframework.cloud:spring-cloud-commons:3.1.7'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+configurations {
+	all {
+		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+	}
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:2021.0.7"
+	}
 }
