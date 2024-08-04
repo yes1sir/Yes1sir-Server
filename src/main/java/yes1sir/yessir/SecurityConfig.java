@@ -22,8 +22,7 @@ public class SecurityConfig {
                         .permitAll()
                         .defaultSuccessUrl("/", true)  // 로그인 성공 시 이동할 URL
                 )
-                .csrf(csrf -> csrf
-                        .disable()  // CSRF 비활성화
+                .csrf(csrf -> csrf.disable()  // CSRF 비활성화
                 );
         return http.build();
     }
