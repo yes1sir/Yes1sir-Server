@@ -18,9 +18,15 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation('org.springframework.boot:spring-boot-starter-thymeleaf') {
+		exclude group: 'commons-logging', module: 'commons-logging'
+	}
+	implementation('org.springframework.boot:spring-boot-starter-web') {
+		exclude group: 'commons-logging', module: 'commons-logging'
+	}
+	implementation('org.springframework.boot:spring-boot-starter-data-jpa') {
+		exclude group: 'commons-logging', module: 'commons-logging'
+	}
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
@@ -29,28 +35,54 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	implementation 'org.slf4j:slf4j-api:2.0.0'
 	runtimeOnly 'org.slf4j:slf4j-simple:2.0.0'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'commons-logging', module: 'commons-logging'
+	}
 
 	// Google API Client Library for Java
-	implementation 'com.google.api-client:google-api-client:1.32.1'
-	implementation 'com.google.oauth-client:google-oauth-client-jetty:1.32.1'
-	implementation 'com.google.http-client:google-http-client-jackson2:1.40.1'
-	implementation 'com.google.http-client:google-http-client-gson:1.40.1'
+	implementation('com.google.api-client:google-api-client:1.32.1') {
+		exclude group: 'commons-logging', module: 'commons-logging'
+	}
+	implementation('com.google.oauth-client:google-oauth-client-jetty:1.32.1') {
+		exclude group: 'commons-logging', module: 'commons-logging'
+	}
+	implementation('com.google.http-client:google-http-client-jackson2:1.40.1') {
+		exclude group: 'commons-logging', module: 'commons-logging'
+	}
+	implementation('com.google.http-client:google-http-client-gson:1.40.1') {
+		exclude group: 'commons-logging', module: 'commons-logging'
+	}
 
 	// Jackson - Ensure correct version
-	implementation 'com.fasterxml.jackson.core:jackson-core:2.14.0'
-	implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.0'
-	implementation 'com.fasterxml.jackson.core:jackson-annotations:2.14.0'
+	implementation('com.fasterxml.jackson.core:jackson-core:2.14.0') {
+		exclude group: 'commons-logging', module: 'commons-logging'
+	}
+	implementation('com.fasterxml.jackson.core:jackson-databind:2.14.0') {
+		exclude group: 'commons-logging', module: 'commons-logging'
+	}
+	implementation('com.fasterxml.jackson.core:jackson-annotations:2.14.0') {
+		exclude group: 'commons-logging', module: 'commons-logging'
+	}
 
-	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+	implementation('org.springframework.cloud:spring-cloud-starter-openfeign') {
+		exclude group: 'commons-logging', module: 'commons-logging'
+	}
 
 	// Spring Security OAuth2 Client
-	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+	implementation('org.springframework.boot:spring-boot-starter-oauth2-client') {
+		exclude group: 'commons-logging', module: 'commons-logging'
+	}
 
 	// Spring Cloud Context
-	implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap:3.1.7'
-	implementation 'org.springframework.cloud:spring-cloud-context:3.1.7'
-	implementation 'org.springframework.cloud:spring-cloud-commons:3.1.7'
+	implementation('org.springframework.cloud:spring-cloud-starter-bootstrap:3.1.7') {
+		exclude group: 'commons-logging', module: 'commons-logging'
+	}
+	implementation('org.springframework.cloud:spring-cloud-context:3.1.7') {
+		exclude group: 'commons-logging', module: 'commons-logging'
+	}
+	implementation('org.springframework.cloud:spring-cloud-commons:3.1.7') {
+		exclude group: 'commons-logging', module: 'commons-logging'
+	}
 }
 
 tasks.named('test') {
