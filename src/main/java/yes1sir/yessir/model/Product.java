@@ -2,7 +2,6 @@ package yes1sir.yessir.model;
 
 import jakarta.persistence.*;
 import java.util.Set;
-import java.math.BigDecimal;
 
 @Entity
 public class Product {
@@ -10,36 +9,29 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+
     private String brand;
-    private String benefits;
+    private String name;
     private String imageUrl;
-    private BigDecimal price;
-    private String recommendedType;
+    private double price;
+    private String recommendedType; // Ensure this field exists in your model
+    private String benefits;
 
     @ManyToMany
     @JoinTable(
-            name = "product_skin_types",
+            name = "product_skin_type",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "skin_type_id")
     )
     private Set<SkinType> applicableSkinTypes;
 
-    // Getters and setters
+    // getters and setters
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getBrand() {
@@ -50,12 +42,12 @@ public class Product {
         this.brand = brand;
     }
 
-    public String getBenefits() {
-        return benefits;
+    public String getName() {
+        return name;
     }
 
-    public void setBenefits(String benefits) {
-        this.benefits = benefits;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getImageUrl() {
@@ -66,11 +58,11 @@ public class Product {
         this.imageUrl = imageUrl;
     }
 
-    public BigDecimal getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -80,6 +72,14 @@ public class Product {
 
     public void setRecommendedType(String recommendedType) {
         this.recommendedType = recommendedType;
+    }
+
+    public String getBenefits() {
+        return benefits;
+    }
+
+    public void setBenefits(String benefits) {
+        this.benefits = benefits;
     }
 
     public Set<SkinType> getApplicableSkinTypes() {

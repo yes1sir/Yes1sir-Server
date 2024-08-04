@@ -22,8 +22,11 @@ public class ProductService {
         return productRepository.findByApplicableSkinTypes_TypeName(skinTypeId);
     }
 
-    // 새로운 메서드 추가
     public Optional<Product> getProductById(Long id) {
         return productRepository.findById(id);
+    }
+
+    public Product saveProduct(Product product) {
+        return productRepository.save(product);
     }
 }
