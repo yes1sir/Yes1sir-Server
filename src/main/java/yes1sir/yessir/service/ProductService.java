@@ -3,6 +3,7 @@ package yes1sir.yessir.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import yes1sir.yessir.model.Product;
+import yes1sir.yessir.model.SkinType;
 import yes1sir.yessir.repository.ProductRepository;
 import yes1sir.yessir.repository.SkinTypeRepository;
 
@@ -21,6 +22,7 @@ public class ProductService {
     }
 
     public List<Product> getProductsBySkinTypeId(Long skinTypeId) {
-        return productRepository.findByRecommendedType(skinTypeRepository.findById(skinTypeId).orElseThrow().getTypeName());
+        SkinType skinType = skinTypeRepository.findById(skinTypeId).orElseThrow();
+        return productRepository.findByRecommendedTypesContaining(skinType);
     }
 }

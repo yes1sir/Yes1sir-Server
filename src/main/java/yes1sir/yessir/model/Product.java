@@ -1,6 +1,7 @@
 package yes1sir.yessir.model;
 
 import jakarta.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Product {
@@ -9,10 +10,17 @@ public class Product {
     private Long id;
     private String brandName;
     private String productName;
-    private String recommendedType;
     private double price;
     private String purpose;
     private String image;
+
+    @ManyToMany
+    @JoinTable(
+            name = "product_skin_type",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "skin_type_id")
+    )
+    private Set<SkinType> recommendedTypes;
 
     // Getters and setters
     public Long getId() {
@@ -39,14 +47,6 @@ public class Product {
         this.productName = productName;
     }
 
-    public String getRecommendedType() {
-        return recommendedType;
-    }
-
-    public void setRecommendedType(String recommendedType) {
-        this.recommendedType = recommendedType;
-    }
-
     public double getPrice() {
         return price;
     }
@@ -69,5 +69,13 @@ public class Product {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public Set<SkinType> getRecommendedTypes() {
+        return recommendedTypes;
+    }
+
+    public void setRecommendedTypes(Set<SkinType> recommendedTypes) {
+        this.recommendedTypes = recommendedTypes;
     }
 }
