@@ -35,3 +35,5 @@ out/
 
 ### VS Code ###
 .vscode/
+
+echo -e "\n# Gradle-specific files\n.gradle/\nbuild/" >> .gitignore
