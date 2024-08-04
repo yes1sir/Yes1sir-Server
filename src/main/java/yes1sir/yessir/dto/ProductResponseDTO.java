@@ -1,7 +1,5 @@
 package yes1sir.yessir.dto;
 
-import java.util.Set;
-
 public class ProductResponseDTO {
     private String productId;
     private String productName;
