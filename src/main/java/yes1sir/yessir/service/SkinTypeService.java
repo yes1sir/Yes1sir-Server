@@ -18,6 +18,6 @@ public class SkinTypeService {
     }
 
     public Optional<SkinType> getSkinTypeByTypeName(String typeName) {
-        return skinTypeRepository.findByTypeName(typeName);
+        return skinTypeRepository.findById(typeName);
     }
 }

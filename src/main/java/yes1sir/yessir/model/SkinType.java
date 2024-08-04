@@ -1,29 +1,20 @@
 package yes1sir.yessir.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import java.util.Set;
 
 @Entity
 public class SkinType {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     private String typeName;
 
     @ManyToMany(mappedBy = "applicableSkinTypes")
     private Set<Product> products;
 
-    // Getters and Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+    // getters and setters
     public String getTypeName() {
         return typeName;
     }

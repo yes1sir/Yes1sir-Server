@@ -1,38 +1,25 @@
-package yes1sir.yessir.model;
+package yes1sir.yessir.dto;
 
-import jakarta.persistence.*;
-import java.math.BigDecimal;
-import java.util.Set;
-
-@Entity
-public class Product {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class ProductResponseDTO {
     private String productName;
     private String brandName;
     private String recommendedType;
-    private BigDecimal price;
+    private String applicableTypes;
+    private double price;
     private String purpose;
     private String image;
 
-    @ManyToMany
-    @JoinTable(
-            name = "product_skin_type",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "skin_type_id")
-    )
-    private Set<SkinType> applicableSkinTypes;
-
-    // getters and setters
-    public Long getId() {
-        return id;
+    public ProductResponseDTO(String productName, String brandName, String recommendedType, String applicableTypes, double price, String purpose, String image) {
+        this.productName = productName;
+        this.brandName = brandName;
+        this.recommendedType = recommendedType;
+        this.applicableTypes = applicableTypes;
+        this.price = price;
+        this.purpose = purpose;
+        this.image = image;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    // Getters and setters
 
     public String getProductName() {
         return productName;
@@ -58,11 +45,19 @@ public class Product {
         this.recommendedType = recommendedType;
     }
 
-    public BigDecimal getPrice() {
+    public String getApplicableTypes() {
+        return applicableTypes;
+    }
+
+    public void setApplicableTypes(String applicableTypes) {
+        this.applicableTypes = applicableTypes;
+    }
+
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -80,13 +75,5 @@ public class Product {
 
     public void setImage(String image) {
         this.image = image;
-    }
-
-    public Set<SkinType> getApplicableSkinTypes() {
-        return applicableSkinTypes;
-    }
-
-    public void setApplicableSkinTypes(Set<SkinType> applicableSkinTypes) {
-        this.applicableSkinTypes = applicableSkinTypes;
     }
 }

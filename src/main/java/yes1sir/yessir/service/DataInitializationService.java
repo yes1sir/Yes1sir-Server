@@ -8,6 +8,8 @@ import yes1sir.yessir.repository.ProductRepository;
 import yes1sir.yessir.repository.SkinTypeRepository;
 
 import jakarta.annotation.PostConstruct;
+
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -39,13 +41,14 @@ public class DataInitializationService {
         // 제품 저장
         Set<SkinType> applicableSkinTypes1 = new HashSet<>();
         applicableSkinTypes1.add(OSPT);
+        applicableSkinTypes1.add(DRPT);
 
         Product product1 = new Product();
         product1.setProductName("[키링증정] 원오브뎀 드 뎀 쿠션 12g 2종 택 1");
         product1.setBrandName("원오브뎀");
         product1.setRecommendedType("O, S");
         product1.setApplicableSkinTypes(applicableSkinTypes1);
-        product1.setPrice(23600);
+        product1.setPrice(new BigDecimal(23600));
         product1.setPurpose("여드름 억제, 반점 제거");
         product1.setImage("https://image.oliveyoung.co.kr/uploads/images/goods/400/10/0000/0020/A00000020657314ko.jpg?l=ko");
 

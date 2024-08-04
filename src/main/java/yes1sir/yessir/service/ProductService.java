@@ -7,6 +7,7 @@ import yes1sir.yessir.model.SkinType;
 import yes1sir.yessir.repository.ProductRepository;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ProductService {
@@ -19,6 +20,8 @@ public class ProductService {
     }
 
     public List<Product> getProductsBySkinType(SkinType skinType) {
-        return productRepository.findByApplicableSkinTypesContaining(skinType);
+        return productRepository.findAll().stream()
+                .filter(product -> product.getApplicableSkinTypes().contains(skinType))
+                .toList();
     }
 }
