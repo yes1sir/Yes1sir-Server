@@ -17,6 +17,7 @@ public class Product {
     private String recommendedType; // Ensure this field exists in your model
     private String benefits;
 
+
     @ManyToMany
     @JoinTable(
             name = "product_skin_type",
@@ -89,4 +90,5 @@ public class Product {
     public void setApplicableSkinTypes(Set<SkinType> applicableSkinTypes) {
         this.applicableSkinTypes = applicableSkinTypes;
     }
+
 }

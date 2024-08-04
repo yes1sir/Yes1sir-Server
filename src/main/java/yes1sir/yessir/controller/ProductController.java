@@ -33,7 +33,8 @@ public class ProductController {
                     product.getBrand(),
                     product.getBenefits(),
                     product.getPrice(),
-                    product.getImageUrl()
+                    product.getImageUrl(),
+                    product.getRecommendedType() // recommendedType 추가
             );
             return ResponseEntity.ok(productResponse);
         } else {
@@ -48,13 +49,15 @@ public class ProductController {
         private String benefits;
         private String price; // 가격을 String 타입으로 변경
         private String imageUrl;
+        private String recommendedType; // recommendedType 추가
 
-        public ProductResponse(String name, String brand, String benefits, double price, String imageUrl) {
+        public ProductResponse(String name, String brand, String benefits, double price, String imageUrl, String recommendedType) {
             this.name = name;
             this.brand = brand;
             this.benefits = benefits;
             this.price = String.valueOf(price);
             this.imageUrl = imageUrl;
+            this.recommendedType = recommendedType;
         }
 
         // Getters
@@ -76,6 +79,10 @@ public class ProductController {
 
         public String getImageUrl() {
             return imageUrl;
+        }
+
+        public String getRecommendedType() {
+            return recommendedType;
         }
     }
 }
