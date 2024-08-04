@@ -30,7 +30,7 @@ public class RecommendationController {
                         String.valueOf(product.getId()), // Long 타입의 ID를 String으로 변환
                         product.getName(),
                         product.getBrand(),
-                        product.getSkinTypes(), // recommendedType
+                        product.getRecommendedType(), // recommendedType
                         product.getApplicableSkinTypes().stream()
                                 .map(SkinType::getTypeName)
                                 .collect(Collectors.joining(", ")), // applicableTypes

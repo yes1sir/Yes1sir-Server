@@ -285,7 +285,6 @@ public class DataInitializationService {
 
     }
 
-
     private SkinType saveSkinType(String typeName) {
         SkinType skinType = new SkinType();
         skinType.setTypeName(typeName);
@@ -304,7 +303,7 @@ public class DataInitializationService {
         product.setName(name);
         product.setImageUrl(imageUrl);
         product.setPrice(price);
-        product.setSkinTypes(recommendedType);
+        product.setRecommendedType(recommendedType);
         product.setBenefits(benefits);
         product.setApplicableSkinTypes(applicableTypes);
         productRepository.save(product);

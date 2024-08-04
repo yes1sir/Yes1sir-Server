@@ -15,6 +15,7 @@ public class Product {
     private String benefits;
     private String imageUrl;
     private BigDecimal price;
+    private String recommendedType;
 
     @ManyToMany
     @JoinTable(
@@ -73,27 +74,19 @@ public class Product {
         this.price = price;
     }
 
+    public String getRecommendedType() {
+        return recommendedType;
+    }
+
+    public void setRecommendedType(String recommendedType) {
+        this.recommendedType = recommendedType;
+    }
+
     public Set<SkinType> getApplicableSkinTypes() {
         return applicableSkinTypes;
     }
 
     public void setApplicableSkinTypes(Set<SkinType> applicableSkinTypes) {
         this.applicableSkinTypes = applicableSkinTypes;
-    }
-
-    public void setSuitableFor(Set<SkinType> suitableFor) {
-        this.applicableSkinTypes = suitableFor;
-    }
-
-    public String getSkinTypes() {
-        return applicableSkinTypes.stream()
-                .map(SkinType::getTypeName)
-                .reduce((first, second) -> first + "," + second)
-                .orElse("");
-    }
-
-    public void setSkinTypes(String skinTypes) {
-        // 이 메서드는 String 타입의 skinTypes를 받아 처리하는 로직을 포함할 수 있습니다.
-        // 필요한 경우 적절한 변환 로직을 추가하세요.
     }
 }
