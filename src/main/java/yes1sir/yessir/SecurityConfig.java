@@ -13,12 +13,18 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/api/**").permitAll() // /api/** 경로에 대한 접근 허용
-                        .anyRequest().authenticated()
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/api/**").permitAll()  // API 요청 허용
+                        .anyRequest().authenticated()  // 그 외 모든 요청 인증 필요
                 )
-                .csrf(csrf -> csrf.disable()); // CSRF 비활성화
-
+                .formLogin(form -> form
+                        .loginPage("/login")  // 로그인 페이지 URL
+                        .permitAll()
+                        .defaultSuccessUrl("/", true)  // 로그인 성공 시 이동할 URL
+                )
+                .csrf(csrf -> csrf
+                        .disable()  // CSRF 비활성화
+                );
         return http.build();
     }
 }
