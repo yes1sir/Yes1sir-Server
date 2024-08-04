@@ -1,23 +1,37 @@
 package yes1sir.yessir.dto;
 
+import java.util.Set;
+
 public class ProductResponseDTO {
+    private String productId;
     private String productName;
     private String brandName;
     private String recommendedType;
     private String applicableTypes;
-    private double price;
+    private String price;
     private String image;
+    private String purpose;
 
-    public ProductResponseDTO(String productName, String brandName, String recommendedType, String applicableTypes, double price, String image) {
+    public ProductResponseDTO(String productId, String productName, String brandName, String recommendedType, String applicableTypes, String price, String image, String purpose) {
+        this.productId = productId;
         this.productName = productName;
         this.brandName = brandName;
         this.recommendedType = recommendedType;
         this.applicableTypes = applicableTypes;
         this.price = price;
         this.image = image;
+        this.purpose = purpose;
     }
 
     // Getters and setters
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
 
     public String getProductName() {
         return productName;
@@ -51,11 +65,11 @@ public class ProductResponseDTO {
         this.applicableTypes = applicableTypes;
     }
 
-    public double getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
@@ -65,5 +79,13 @@ public class ProductResponseDTO {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getPurpose() {
+        return purpose;
+    }
+
+    public void setPurpose(String purpose) {
+        this.purpose = purpose;
     }
 }

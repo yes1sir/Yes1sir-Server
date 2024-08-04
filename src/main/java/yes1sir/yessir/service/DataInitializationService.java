@@ -286,7 +286,13 @@ public class DataInitializationService {
     }
 
 
-    private void addProduct(String brand, String name, String imageUrl, BigDecimal price, String skinTypes, String benefits, Set<SkinType> suitableFor) {
+    private SkinType saveSkinType(String typeName) {
+        SkinType skinType = new SkinType();
+        skinType.setTypeName(typeName);
+        return skinTypeRepository.save(skinType);
+    }
+
+    private void addProduct(String brand, String name, String imageUrl, BigDecimal price, String recommendedType, String benefits, Set<SkinType> applicableTypes) {
         // 중복 여부 확인
         if (productRepository.existsByBrandAndName(brand, name)) {
             return; // 이미 존재하면 추가하지 않음
@@ -298,9 +304,9 @@ public class DataInitializationService {
         product.setName(name);
         product.setImageUrl(imageUrl);
         product.setPrice(price);
-        product.setSkinTypes(skinTypes);
+        product.setSkinTypes(recommendedType);
         product.setBenefits(benefits);
-        product.setSuitableFor(suitableFor);
+        product.setApplicableSkinTypes(applicableTypes);
         productRepository.save(product);
     }
 }

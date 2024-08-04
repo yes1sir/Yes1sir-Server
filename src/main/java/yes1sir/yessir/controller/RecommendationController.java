@@ -6,9 +6,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import yes1sir.yessir.dto.ProductResponseDTO;
 import yes1sir.yessir.model.Product;
+import yes1sir.yessir.model.SkinType;
 import yes1sir.yessir.service.ProductService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class RecommendationController {
@@ -25,12 +27,16 @@ public class RecommendationController {
         List<Product> products = productService.recommendProducts(skinTypeId);
         return products.stream()
                 .map(product -> new ProductResponseDTO(
+                        String.valueOf(product.getId()), // Long 타입의 ID를 String으로 변환
                         product.getName(),
                         product.getBrand(),
-                        product.getSkinTypes().toString(),  // 수정된 부분
-                        product.getBenefits(),
-                        product.getPrice().doubleValue(),  // 수정된 부분
-                        product.getImageUrl()  // 수정된 부분
+                        product.getSkinTypes(), // recommendedType
+                        product.getApplicableSkinTypes().stream()
+                                .map(SkinType::getTypeName)
+                                .collect(Collectors.joining(", ")), // applicableTypes
+                        String.valueOf(product.getPrice().intValue()), // 소수점 없이 문자열로 반환
+                        product.getImageUrl(),
+                        product.getBenefits() // purpose
                 ))
                 .toList();
     }
