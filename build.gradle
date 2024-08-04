@@ -83,6 +83,10 @@ dependencies {
 	implementation('org.springframework.cloud:spring-cloud-commons:3.1.7') {
 		exclude group: 'commons-logging', module: 'commons-logging'
 	}
+
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
 }
 
 tasks.named('test') {
