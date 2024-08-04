@@ -23,6 +23,6 @@ public class ProductService {
 
     public List<Product> getProductsBySkinTypeId(Long skinTypeId) {
         SkinType skinType = skinTypeRepository.findById(skinTypeId).orElseThrow();
-        return productRepository.findByRecommendedTypesContaining(skinType);
+        return productRepository.findByApplicableSkinTypesContaining(skinType);
     }
 }

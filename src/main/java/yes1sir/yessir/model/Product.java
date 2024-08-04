@@ -13,6 +13,7 @@ public class Product {
     private double price;
     private String purpose;
     private String image;
+    private String recommendedType; // single recommended type
 
     @ManyToMany
     @JoinTable(
@@ -20,7 +21,7 @@ public class Product {
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "skin_type_id")
     )
-    private Set<SkinType> recommendedTypes;
+    private Set<SkinType> applicableSkinTypes;
 
     // Getters and setters
     public Long getId() {
@@ -71,11 +72,19 @@ public class Product {
         this.image = image;
     }
 
-    public Set<SkinType> getRecommendedTypes() {
-        return recommendedTypes;
+    public Set<SkinType> getApplicableSkinTypes() {
+        return applicableSkinTypes;
     }
 
-    public void setRecommendedTypes(Set<SkinType> recommendedTypes) {
-        this.recommendedTypes = recommendedTypes;
+    public void setApplicableSkinTypes(Set<SkinType> applicableSkinTypes) {
+        this.applicableSkinTypes = applicableSkinTypes;
+    }
+
+    public String getRecommendedType() {
+        return recommendedType;
+    }
+
+    public void setRecommendedType(String recommendedType) {
+        this.recommendedType = recommendedType;
     }
 }

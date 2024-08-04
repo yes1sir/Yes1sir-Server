@@ -44,18 +44,18 @@ public class DataInitializationService {
         SkinType OSNW = saveSkinType("OSNW");
 
         // 제품 정보 저장
-        Set<SkinType> recommendedTypes1 = new HashSet<>();
-        recommendedTypes1.add(OSPT);
-        recommendedTypes1.add(OSPW);
-        saveProduct("원오브뎀", "[키링증정] 원오브뎀 드 뗑 쿠션 12g 2종 택 1", recommendedTypes1, 23600, "여드름 억제, 반점 제거", "https://image.oliveyoung.co.kr/uploads/images/goods/400/10/0000/0020/A00000020657314ko.jpg?l=ko");
+        Set<SkinType> applicableSkinTypes1 = new HashSet<>();
+        applicableSkinTypes1.add(OSPT);
+        applicableSkinTypes1.add(OSPW);
+        saveProduct("원오브뎀", "[키링증정] 원오브뎀 드 뗑 쿠션 12g 2종 택 1", "D, S", applicableSkinTypes1, 23600, "여드름 억제, 반점 제거", "https://image.oliveyoung.co.kr/uploads/images/goods/400/10/0000/0020/A00000020657314ko.jpg?l=ko");
 
-        Set<SkinType> recommendedTypes2 = new HashSet<>();
-        recommendedTypes2.add(ORNT);
-        saveProduct("우르오스", "[옥택연Pick]우르오스 스킨워시 500ml 단품/기획(+메쉬파우치)", recommendedTypes2, 15700, "여드름 억제, 모공 청소, 반점 제거", "https://image.oliveyoung.co.kr/uploads/images/goods/400/10/0000/0020/A00000020580213ko.jpg?l=ko");
+        Set<SkinType> applicableSkinTypes2 = new HashSet<>();
+        applicableSkinTypes2.add(ORNT);
+        saveProduct("우르오스", "[옥택연Pick]우르오스 스킨워시 500ml 단품/기획(+메쉬파우치)", "O, W", applicableSkinTypes2, 15700, "여드름 억제, 모공 청소, 반점 제거", "https://image.oliveyoung.co.kr/uploads/images/goods/400/10/0000/0020/A00000020580213ko.jpg?l=ko");
 
-        Set<SkinType> recommendedTypes3 = new HashSet<>();
-        recommendedTypes3.add(DRNT);
-        saveProduct("아이디얼포맨", "[콜라겐]아이디얼 포 맨 퍼펙트 올인원 기획 2024 AD(150mL+30mL)", recommendedTypes3, 22500, "반점 제거, 모공 청소, 주름 제거, 탄력 증진", "https://image.oliveyoung.co.kr/uploads/images/goods/400/10/0000/0020/A00000020787604ko.jpg?l=ko");
+        Set<SkinType> applicableSkinTypes3 = new HashSet<>();
+        applicableSkinTypes3.add(DRNT);
+        saveProduct("아이디얼포맨", "[콜라겐]아이디얼 포 맨 퍼펙트 올인원 기획 2024 AD(150mL+30mL)", "D, R", applicableSkinTypes3, 22500, "반점 제거, 모공 청소, 주름 제거, 탄력 증진", "https://image.oliveyoung.co.kr/uploads/images/goods/400/10/0000/0020/A00000020787604ko.jpg?l=ko");
 
         // 추가적인 제품 정보는 같은 형식으로 계속 삽입...
     }
@@ -66,11 +66,12 @@ public class DataInitializationService {
         return skinTypeRepository.save(skinType);
     }
 
-    private void saveProduct(String brandName, String productName, Set<SkinType> recommendedTypes, double price, String purpose, String image) {
+    private void saveProduct(String brandName, String productName, String recommendedType, Set<SkinType> applicableSkinTypes, double price, String purpose, String image) {
         Product product = new Product();
         product.setBrandName(brandName);
         product.setProductName(productName);
-        product.setRecommendedTypes(recommendedTypes);
+        product.setRecommendedType(recommendedType);
+        product.setApplicableSkinTypes(applicableSkinTypes);
         product.setPrice(price);
         product.setPurpose(purpose);
         product.setImage(image);
