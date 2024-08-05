@@ -9,6 +9,7 @@ import yes1sir.yessir.model.Product;
 import yes1sir.yessir.model.SkinType;
 import yes1sir.yessir.service.ProductService;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,6 +26,8 @@ public class RecommendationController {
     @GetMapping("/api/recommendations/{skinTypeId}")
     public List<ProductResponseDTO> recommendProducts(@PathVariable String skinTypeId) {
         List<Product> products = productService.recommendProducts(skinTypeId);
+        DecimalFormat decimalFormat = new DecimalFormat("#");
+
         return products.stream()
                 .map(product -> new ProductResponseDTO(
                         String.valueOf(product.getId()), // Long 타입의 ID를 String으로 변환
@@ -34,10 +37,10 @@ public class RecommendationController {
                         product.getApplicableSkinTypes().stream()
                                 .map(SkinType::getTypeName)
                                 .collect(Collectors.joining(", ")), // applicableTypes
-                        String.valueOf(product.getPrice()), // 소수점 없이 문자열로 반환
+                        decimalFormat.format(product.getPrice()), // 소수점 없이 문자열로 반환
                         product.getImageUrl(),
                         product.getBenefits() // purpose
                 ))
-                .toList();
+                .collect(Collectors.toList());
     }
 }

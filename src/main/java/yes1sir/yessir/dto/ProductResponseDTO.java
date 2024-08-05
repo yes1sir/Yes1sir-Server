@@ -21,69 +21,36 @@ public class ProductResponseDTO {
         this.purpose = purpose;
     }
 
-    // Getters and setters
-
+    // Getters
     public String getProductId() {
         return productId;
-    }
-
-    public void setProductId(String productId) {
-        this.productId = productId;
     }
 
     public String getProductName() {
         return productName;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
     public String getBrandName() {
         return brandName;
-    }
-
-    public void setBrandName(String brandName) {
-        this.brandName = brandName;
     }
 
     public String getRecommendedType() {
         return recommendedType;
     }
 
-    public void setRecommendedType(String recommendedType) {
-        this.recommendedType = recommendedType;
-    }
-
     public String getApplicableTypes() {
         return applicableTypes;
-    }
-
-    public void setApplicableTypes(String applicableTypes) {
-        this.applicableTypes = applicableTypes;
     }
 
     public String getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
     public String getImage() {
         return image;
     }
 
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     public String getPurpose() {
         return purpose;
-    }
-
-    public void setPurpose(String purpose) {
-        this.purpose = purpose;
     }
 }

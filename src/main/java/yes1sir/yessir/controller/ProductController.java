@@ -7,10 +7,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import yes1sir.yessir.dto.ProductResponseDTO;
 import yes1sir.yessir.model.Product;
+import yes1sir.yessir.model.SkinType;
 import yes1sir.yessir.service.ProductService;
 
+import java.text.DecimalFormat;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/products")
@@ -28,61 +32,24 @@ public class ProductController {
         Optional<Product> productOpt = productService.getProductById(productId);
         if (productOpt.isPresent()) {
             Product product = productOpt.get();
-            ProductResponse productResponse = new ProductResponse(
+            DecimalFormat decimalFormat = new DecimalFormat("#");
+
+            ProductResponseDTO productResponse = new ProductResponseDTO(
+                    String.valueOf(product.getId()), // Long 타입의 ID를 String으로 변환
                     product.getName(),
                     product.getBrand(),
-                    product.getBenefits(),
-                    product.getPrice(),
+                    product.getRecommendedType(), // recommendedType
+                    product.getApplicableSkinTypes().stream()
+                            .map(SkinType::getTypeName)
+                            .collect(Collectors.joining(", ")), // applicableTypes
+                    decimalFormat.format(product.getPrice()), // 소수점 없이 문자열로 반환
                     product.getImageUrl(),
-                    product.getRecommendedType() // recommendedType 추가
+                    product.getBenefits() // purpose
             );
             return ResponseEntity.ok(productResponse);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("{\"detail\": \"제품을 찾을 수 없습니다.\"}");
-        }
-    }
-
-    public static class ProductResponse {
-        private String name;
-        private String brand;
-        private String benefits;
-        private String price; // 가격을 String 타입으로 변경
-        private String imageUrl;
-        private String recommendedType; // recommendedType 추가
-
-        public ProductResponse(String name, String brand, String benefits, double price, String imageUrl, String recommendedType) {
-            this.name = name;
-            this.brand = brand;
-            this.benefits = benefits;
-            this.price = String.valueOf(price);
-            this.imageUrl = imageUrl;
-            this.recommendedType = recommendedType;
-        }
-
-        // Getters
-        public String getName() {
-            return name;
-        }
-
-        public String getBrand() {
-            return brand;
-        }
-
-        public String getBenefits() {
-            return benefits;
-        }
-
-        public String getPrice() {
-            return price;
-        }
-
-        public String getImageUrl() {
-            return imageUrl;
-        }
-
-        public String getRecommendedType() {
-            return recommendedType;
         }
     }
 }
