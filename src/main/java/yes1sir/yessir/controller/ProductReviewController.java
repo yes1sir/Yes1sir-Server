@@ -4,11 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import yes1sir.yessir.dto.ReviewRequest;
 import yes1sir.yessir.dto.ReviewResponse;
 import yes1sir.yessir.model.ProductReview;
 import yes1sir.yessir.service.ProductReviewService;
 
+import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @RestController
@@ -24,12 +27,21 @@ public class ProductReviewController {
 
     @PostMapping("/{productId}/reviews")
     public ResponseEntity<?> createReview(@PathVariable Long productId,
-                                          @RequestBody ReviewRequest reviewRequest) {
+                                          @RequestPart("review") ReviewRequest reviewRequest,
+                                          @RequestPart("commentFile") MultipartFile commentFile) {
         ProductReview review = new ProductReview();
         review.setProductId(productId);
-        review.setUserName(reviewRequest.getUserName());  // Assuming userName is provided in the request
+        review.setUserName(reviewRequest.getUserName());
         review.setRating(reviewRequest.getRating());
-        review.setComment(reviewRequest.getComment());
+
+        try {
+            review.setComment(new String(commentFile.getBytes()));
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"detail\": \"파일 처리 중 오류가 발생했습니다.\"}");
+        }
+
+        review.setReviewDate(LocalDateTime.now());
 
         ProductReview savedReview = productReviewService.saveReview(review);
 
@@ -46,7 +58,8 @@ public class ProductReviewController {
     @PatchMapping("/{productId}/reviews/{reviewId}")
     public ResponseEntity<?> updateReview(@PathVariable Long productId,
                                           @PathVariable Long reviewId,
-                                          @RequestBody ReviewRequest reviewRequest) {
+                                          @RequestPart("review") ReviewRequest reviewRequest,
+                                          @RequestPart("commentFile") MultipartFile commentFile) {
         Optional<ProductReview> reviewOpt = productReviewService.getReviewById(productId, reviewId);
 
         if (!reviewOpt.isPresent()) {
@@ -56,7 +69,15 @@ public class ProductReviewController {
 
         ProductReview review = reviewOpt.get();
         review.setRating(reviewRequest.getRating());
-        review.setComment(reviewRequest.getComment());
+
+        try {
+            review.setComment(new String(commentFile.getBytes()));
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"detail\": \"파일 처리 중 오류가 발생했습니다.\"}");
+        }
+
+        review.setReviewDate(LocalDateTime.now());
 
         ProductReview updatedReview = productReviewService.saveReview(review);
 

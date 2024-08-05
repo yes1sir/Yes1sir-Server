@@ -14,7 +14,10 @@ public class ProductReview {
 
     private String userName;
     private int rating;
+
+    @Lob
     private String comment;
+
     private LocalDateTime reviewDate;
 
     // Getters and Setters
