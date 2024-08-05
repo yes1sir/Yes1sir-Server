@@ -3,8 +3,6 @@ package yes1sir.yessir.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.*;
 import yes1sir.yessir.dto.ReviewRequest;
 import yes1sir.yessir.dto.ReviewResponse;
@@ -26,15 +24,10 @@ public class ProductReviewController {
 
     @PostMapping("/{productId}/reviews")
     public ResponseEntity<?> createReview(@PathVariable Long productId,
-                                          @AuthenticationPrincipal OidcUser oidcUser,
                                           @RequestBody ReviewRequest reviewRequest) {
-        if (oidcUser == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("{\"detail\": \"유저를 찾을 수 없습니다.\"}");
-        }
-
         ProductReview review = new ProductReview();
         review.setProductId(productId);
-        review.setUserName(oidcUser.getFullName());
+        review.setUserName(reviewRequest.getUserName());  // Assuming userName is provided in the request
         review.setRating(reviewRequest.getRating());
         review.setComment(reviewRequest.getComment());
 
