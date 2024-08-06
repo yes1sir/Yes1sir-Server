@@ -16,7 +16,11 @@ public class ProductReview {
     private int rating;
 
     @Lob
+<<<<<<< HEAD
     private String comment;
+=======
+    private String comments;
+>>>>>>> 8b93cc8 (feat: CORS 에러 확인 수정)
 
     private LocalDateTime reviewDate;
 
@@ -54,12 +58,12 @@ public class ProductReview {
         this.rating = rating;
     }
 
-    public String getComment() {
-        return comment;
+    public String getComments() {
+        return comments;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 
     public LocalDateTime getReviewDate() {

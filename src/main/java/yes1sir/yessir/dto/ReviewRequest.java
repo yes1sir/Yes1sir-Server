@@ -5,26 +5,26 @@ public class ReviewRequest {
     private int rating;
     private String comment;
 
-    // Getters
+    // Getters and Setters
+
     public String getUserName() {
         return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public int getRating() {
         return rating;
     }
 
-    public String getComment() {
-        return comment;
-    }
-
-    // Setters
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    public String getComment() {
+        return comment;
     }
 
     public void setComment(String comment) {

@@ -19,14 +19,11 @@ public class ProductService {
     }
 
     public List<Product> recommendProducts(String skinTypeId) {
+        // 여기에 적절한 로직을 추가하십시오
         return productRepository.findByApplicableSkinTypes_TypeName(skinTypeId);
     }
 
     public Optional<Product> getProductById(Long id) {
         return productRepository.findById(id);
-    }
-
-    public Product saveProduct(Product product) {
-        return productRepository.save(product);
     }
 }

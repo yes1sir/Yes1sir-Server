@@ -10,6 +10,8 @@ public class ReviewResponse {
     private String comment;
     private LocalDateTime reviewDate;
 
+    // Constructor
+
     public ReviewResponse(Long reviewId, Long productId, String userName, int rating, String comment, LocalDateTime reviewDate) {
         this.reviewId = reviewId;
         this.productId = productId;
@@ -20,6 +22,7 @@ public class ReviewResponse {
     }
 
     // Getters
+
     public Long getReviewId() {
         return reviewId;
     }

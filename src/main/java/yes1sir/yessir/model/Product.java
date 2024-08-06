@@ -14,9 +14,8 @@ public class Product {
     private String name;
     private String imageUrl;
     private double price;
-    private String recommendedType; // Ensure this field exists in your model
+    private String recommendedType;
     private String benefits;
-
 
     @ManyToMany
     @JoinTable(
@@ -25,6 +24,9 @@ public class Product {
             inverseJoinColumns = @JoinColumn(name = "skin_type_id")
     )
     private Set<SkinType> applicableSkinTypes;
+
+    @OneToMany(mappedBy = "productId")
+    private Set<ProductReview> reviews;
 
     // getters and setters
     public Long getId() {
@@ -91,4 +93,11 @@ public class Product {
         this.applicableSkinTypes = applicableSkinTypes;
     }
 
+    public Set<ProductReview> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(Set<ProductReview> reviews) {
+        this.reviews = reviews;
+    }
 }
