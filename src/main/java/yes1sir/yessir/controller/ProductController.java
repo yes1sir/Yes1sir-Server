@@ -3,26 +3,14 @@ package yes1sir.yessir.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-<<<<<<< HEAD
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import yes1sir.yessir.dto.ProductResponseDTO;
-=======
 import org.springframework.web.bind.annotation.*;
 import yes1sir.yessir.dto.ProductWithReviewsResponse;
 import yes1sir.yessir.dto.ReviewResponse;
->>>>>>> 8b93cc8 (feat: CORS 에러 확인 수정)
 import yes1sir.yessir.model.Product;
 import yes1sir.yessir.model.SkinType;
 import yes1sir.yessir.service.ProductService;
 
-<<<<<<< HEAD
-import java.text.DecimalFormat;
-=======
 import java.util.List;
->>>>>>> 8b93cc8 (feat: CORS 에러 확인 수정)
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -40,29 +28,6 @@ public class ProductController {
     @GetMapping("/{productId}")
     public ResponseEntity<?> getProductWithReviews(@PathVariable Long productId) {
         Optional<Product> productOpt = productService.getProductById(productId);
-<<<<<<< HEAD
-        if (productOpt.isPresent()) {
-            Product product = productOpt.get();
-            DecimalFormat decimalFormat = new DecimalFormat("#");
-
-            ProductResponseDTO productResponse = new ProductResponseDTO(
-                    String.valueOf(product.getId()), // Long 타입의 ID를 String으로 변환
-                    product.getName(),
-                    product.getBrand(),
-                    product.getRecommendedType(), // recommendedType
-                    product.getApplicableSkinTypes().stream()
-                            .map(SkinType::getTypeName)
-                            .collect(Collectors.joining(", ")), // applicableTypes
-                    decimalFormat.format(product.getPrice()), // 소수점 없이 문자열로 반환
-                    product.getImageUrl(),
-                    product.getBenefits() // purpose
-            );
-            return ResponseEntity.ok(productResponse);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("{\"detail\": \"제품을 찾을 수 없습니다.\"}");
-        }
-=======
 
         if (!productOpt.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -90,6 +55,5 @@ public class ProductController {
                 product.getBenefits(),
                 product.getApplicableSkinTypes().stream().map(SkinType::getTypeName).collect(Collectors.toSet()),
                 reviews));
->>>>>>> 8b93cc8 (feat: CORS 에러 확인 수정)
     }
 }

@@ -16,11 +16,7 @@ public class ProductReview {
     private int rating;
 
     @Lob
-<<<<<<< HEAD
-    private String comment;
-=======
-    private String comments;
->>>>>>> 8b93cc8 (feat: CORS 에러 확인 수정)
+    private String comments;  // 'comments'로 통일
 
     private LocalDateTime reviewDate;
 
